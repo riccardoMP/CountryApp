@@ -1,65 +1,35 @@
 package com.country.app.feature.country.ui
 
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ClearAll
-import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Preview
+import com.country.app.feature.country.domain.model.CountryData
 import com.country.app.feature.country.ui.component.CountryList
-import com.country.app.feature.country.viewmodel.CountryViewModel
 
 @Composable
-fun CountryListScreen(
-    viewModel: CountryViewModel,
-) {
-
-    val filteredCountries by viewModel.countryList.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.loadData()
-    }
-
+fun CountryListScreen(list: List<CountryData>, onQueryUpdated: (String) -> Unit) {
 
     val scrollState = rememberLazyListState()
-    val activity = LocalContext.current as ComponentActivity
-
-    BackHandler {
-        activity.finish()
-    }
 
     Column(modifier = Modifier.fillMaxSize()) {
-
-        Spacer(modifier = Modifier.fillMaxWidth())
-
-        SearchableToolbar {
-            viewModel.filterData(query = it )
-        }
-
-        if (filteredCountries.isEmpty()) {
-            EmptyScreen(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .navigationBarsPadding()
-            )
-        } else {
-            CountryList(list = filteredCountries, scrollState)
-        }
+        SearchableToolbar(onQueryUpdated = onQueryUpdated::invoke)
+        CountryList(list = list, scrollState)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewCountryListScreen() {
+    val countryList = listOf(
+        CountryData(country = "Lima, Peru", latitude = -12.0464, longitude = -77.0428),
+        CountryData(country = "Buenos Aires, Argentina", latitude = -12.0464, longitude = -77.0428)
+    )
+
+    CountryListScreen(
+        list = countryList,
+        onQueryUpdated = {}
+    )
 }

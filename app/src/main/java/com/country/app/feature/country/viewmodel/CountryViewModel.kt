@@ -1,43 +1,54 @@
 package com.country.app.feature.country.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.country.app.feature.country.domain.interactor.CountryInteractor
-import com.country.app.feature.country.domain.model.CountryData
+import com.country.app.feature.country.domain.usecase.CountryUseCase
+import com.country.app.feature.country.domain.usecase.state.CountryStateDomain.DataError
+import com.country.app.feature.country.domain.usecase.state.CountryStateDomain.DataReady
+import com.country.app.feature.country.domain.usecase.state.CountryStateDomain.Loading
+import com.country.app.feature.country.viewmodel.state.CountryUIState
+import com.country.app.feature.country.viewmodel.state.CountryUIState.OnDataError
+import com.country.app.feature.country.viewmodel.state.CountryUIState.OnDataReady
+import com.country.app.feature.country.viewmodel.state.CountryUIState.OnLoading
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 @HiltViewModel
-class CountryViewModel @Inject constructor(private val interactor: CountryInteractor) :
+@OptIn(FlowPreview::class)
+
+class CountryViewModel @Inject constructor(private val useCase: CountryUseCase) :
     ViewModel() {
 
-    private var countryDataList: List<CountryData> = listOf()
+    private val searchQueryStateFlow = MutableStateFlow("")
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val countryUIState: StateFlow<CountryUIState> = searchQueryStateFlow
+        .debounce(300)
+        .flatMapLatest { query ->
+            useCase.filterData(query).map { state ->
 
-    private val _countryList = MutableStateFlow<List<CountryData>>(listOf())
-    val countryList: StateFlow<List<CountryData>> = _countryList
+                when (state) {
+                    is Loading -> OnLoading
+                    is DataReady -> {
+                        OnDataReady(state.data)
+                    }
+                    is DataError -> OnDataError(state.error)
+                }
 
-
-    fun loadData() {
-        viewModelScope.launch {
-            interactor.loadData().collect {
-                countryDataList = it
-                _countryList.value = it
             }
         }
-    }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), OnLoading)
 
-    fun filterData(query: String) {
-        viewModelScope.launch {
-            interactor.filterData(currentList = countryDataList, query = query).collect {
-                Log.d("TAG", "_countryList: ${_countryList.value.size}")
-                _countryList.value = it
-            }
-        }
+    fun updateSearchQuery(query: String) {
+        searchQueryStateFlow.value = query
     }
-
 }

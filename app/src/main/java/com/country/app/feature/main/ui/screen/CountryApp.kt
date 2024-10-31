@@ -1,4 +1,4 @@
-package com.country.app.feature.country.ui.screen
+package com.country.app.feature.main.ui.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.country.app.feature.country.viewmodel.CountryViewModel
+import com.country.app.feature.country.ui.screen.CountryScreen
 
 @Composable
 fun CountryApp(modifier: Modifier = Modifier) {
@@ -23,7 +24,10 @@ fun CountryApp(modifier: Modifier = Modifier) {
         ) {
             val viewModel = hiltViewModel<CountryViewModel>()
 
-            CountryScreen(viewModel = viewModel)
+            CountryScreen(
+                uiState = viewModel.countryUIState.collectAsState(),
+                onQueryUpdated = viewModel::updateSearchQuery
+            )
         }
     }
 }

@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,14 +22,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction.Companion.Done
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.country.app.R
 import com.country.app.ui.theme.Gray
 
 @Composable
-fun SearchableToolbar(
-    onQueryUpdated: (String) -> Unit,
-) {
+fun SearchableToolbar(onQueryUpdated: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,4 +68,11 @@ fun SearchableToolbar(
                 .height(80.dp)
         )
     }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewSearchToolbar() {
+    SearchableToolbar(onQueryUpdated = {})
 }
