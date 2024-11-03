@@ -1,6 +1,7 @@
 package com.country.app.feature.country.ui.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,9 +22,11 @@ import androidx.compose.ui.unit.dp
 import com.country.app.feature.country.domain.model.CountryData
 
 @Composable
-fun CountryItem(data: CountryData) {
+fun CountryItem(data: CountryData, onClick: (countryId: Int) -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick(data.id) },
         shape = RoundedCornerShape(4.dp),
         colors = CardDefaults.cardColors(containerColor = White),
         elevation = CardDefaults.cardElevation(2.dp),
@@ -55,6 +58,7 @@ fun CountryItem(data: CountryData) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCountryItem() {
-    val data = CountryData(country = "Lima, Peru", latitude = -12.0464, longitude = -77.0428)
-    CountryItem(data = data)
+    val data =
+        CountryData(id = 1, country = "Lima, Peru", latitude = -12.0464, longitude = -77.0428)
+    CountryItem(data = data, onClick = {})
 }

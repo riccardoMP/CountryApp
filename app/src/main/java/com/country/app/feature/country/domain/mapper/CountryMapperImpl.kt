@@ -9,6 +9,7 @@ class CountryMapperImpl @Inject constructor() : CountryMapper {
         entity: CountryEntity
     ): CountryData = with(entity) {
         CountryData(
+            id = id,
             country = "$city, $country",
             latitude = coordinate.latitude,
             longitude = coordinate.longitude

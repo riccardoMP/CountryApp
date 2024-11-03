@@ -30,7 +30,7 @@ class CountryHelperImpl @Inject constructor(
             fullList
         } else {
             fullList.filter {
-                it.country.startsWith(query, ignoreCase = true)
+                it.country.startsWith(query)
             }
         }
     }

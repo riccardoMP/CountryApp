@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androix.material)
     implementation(libs.compose.icons.extended)
+    implementation(libs.androidx.maps)
 
     //Hilt
     implementation(libs.hilt.android)

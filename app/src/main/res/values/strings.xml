@@ -3,6 +3,8 @@
     <string name="filter_country_name">Filter country</string>
     <string name="general_loading">Loading</string>
     <string name="generic_error_message">An error occurred !</string>
-    genericErrorMessage
+
+    <string name="country_details_title">Country Details</string>
+
 
 </resources>

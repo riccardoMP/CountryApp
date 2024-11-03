@@ -15,7 +15,11 @@ import androidx.compose.ui.unit.dp
 import com.country.app.feature.country.domain.model.CountryData
 
 @Composable
-fun CountryList(list: List<CountryData>, scrollState: LazyListState) = LazyColumn(
+fun CountryList(
+    list: List<CountryData>,
+    scrollState: LazyListState,
+    onCountryClick: (Int) -> Unit
+) = LazyColumn(
     modifier = Modifier
         .fillMaxSize()
         .navigationBarsPadding(),
@@ -23,8 +27,8 @@ fun CountryList(list: List<CountryData>, scrollState: LazyListState) = LazyColum
     verticalArrangement = Arrangement.spacedBy(16.dp),
     state = scrollState,
 ) {
-    items(items = list) { data ->
-        CountryItem(data = data)
+    items(items = list, key = { it.id }) { data ->
+        CountryItem(data = data, onClick = onCountryClick)
     }
 }
 
@@ -32,11 +36,16 @@ fun CountryList(list: List<CountryData>, scrollState: LazyListState) = LazyColum
 @Composable
 fun PreviewCountryList() {
     val countryList = listOf(
-        CountryData(country = "Lima, Peru", latitude = -12.0464, longitude = -77.0428),
-        CountryData(country = "Buenos Aires, Argentina", latitude = -12.0464, longitude = -77.0428)
+        CountryData(id = 1, country = "Lima, Peru", latitude = -12.0464, longitude = -77.0428),
+        CountryData(
+            id = 2,
+            country = "Buenos Aires, Argentina",
+            latitude = -12.0464,
+            longitude = -77.0428
+        )
     )
     val scrollState = remember { LazyListState() }
 
-    CountryList(list = countryList, scrollState = scrollState)
+    CountryList(list = countryList, scrollState = scrollState, onCountryClick = {})
 
 }
