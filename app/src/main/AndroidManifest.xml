@@ -14,7 +14,7 @@
         android:theme="@style/Theme.CountryApp"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".feature.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CountryApp">
@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAV2wrGik8hBnMeboujHH_T5kjfoYLn7QE"/>
     </application>
 
 </manifest>

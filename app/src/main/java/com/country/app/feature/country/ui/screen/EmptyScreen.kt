@@ -1,4 +1,4 @@
-package com.country.app.feature.country.ui
+package com.country.app.feature.country.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
