@@ -34,7 +34,7 @@ fun SearchableToolbar(onQueryUpdated: (String) -> Unit) {
             .fillMaxWidth()
             .height(100.dp)
             .clip(RoundedCornerShape(bottomEnd = 24.dp, bottomStart = 24.dp))
-            .background(Gray),
+            .background(MaterialTheme.colorScheme.primary),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {

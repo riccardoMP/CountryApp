@@ -18,7 +18,7 @@ import com.country.app.feature.country.domain.model.CountryData
 fun CountryList(
     list: List<CountryData>,
     scrollState: LazyListState,
-    onCountryClick: (Int) -> Unit
+    onCountryClick: (CountryData) -> Unit
 ) = LazyColumn(
     modifier = Modifier
         .fillMaxSize()

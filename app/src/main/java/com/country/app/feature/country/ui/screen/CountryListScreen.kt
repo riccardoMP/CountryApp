@@ -14,7 +14,7 @@ import com.country.app.feature.country.ui.component.CountryList
 fun CountryListScreen(
     list: List<CountryData>,
     onQueryUpdated: (String) -> Unit,
-    onCountryClick: (Int) -> Unit
+    onCountryClick: (CountryData) -> Unit
 ) {
 
     val scrollState = rememberLazyListState()

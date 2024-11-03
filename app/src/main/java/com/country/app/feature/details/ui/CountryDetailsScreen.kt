@@ -32,18 +32,16 @@ import com.google.maps.android.compose.MarkerState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CountryDetailsScreen(navHostController: NavController, countryId: String) {
+fun CountryDetailsScreen(navHostController: NavController, latitude: Double, longitude: Double) {
 
     Scaffold(topBar = {
         TopAppBar(title = { Text(stringResource(id = R.string.country_details_title)) },
             colors = TopAppBarDefaults.largeTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary, // Set the background color of the TopAppBar
-                titleContentColor = MaterialTheme.colorScheme.onPrimary // Set the title color
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
             ),
             navigationIcon = {
-                IconButton(
-                    onClick = { navHostController.popBackStack() },
-                ) {
+                IconButton(onClick = { navHostController.navigateUp() }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"
@@ -52,20 +50,18 @@ fun CountryDetailsScreen(navHostController: NavController, countryId: String) {
             })
     }, modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-        Column(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text = "Details for country: $countryId",
-                modifier = Modifier.padding(innerPadding)
-            )
-            MapScreen()
+        Column(modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize()) {
+            MapScreen(latitude = latitude, longitude = longitude)
         }
 
     }
 }
 
 @Composable
-fun MapScreen() {
-    val atasehir = LatLng(40.9971, 29.1007)
+fun MapScreen(latitude: Double, longitude: Double) {
+    val atasehir = LatLng(latitude, longitude)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(atasehir, 15f)
     }

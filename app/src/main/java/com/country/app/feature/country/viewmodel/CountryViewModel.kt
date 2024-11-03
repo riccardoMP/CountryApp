@@ -24,7 +24,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 @OptIn(FlowPreview::class)
-
 class CountryViewModel @Inject constructor(private val useCase: CountryUseCase) :
     ViewModel() {
 

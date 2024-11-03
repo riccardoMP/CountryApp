@@ -17,8 +17,11 @@ fun CountryScreen(
     onQueryUpdated: (String) -> Unit
 ) {
 
-    val onCountryClick: (Int) -> Unit = { countryId ->
-        val route: String = Screen.DetailsScreen.passId(countryId)
+    val onCountryClick: (CountryData) -> Unit = { country ->
+        val route: String = Screen.DetailsScreen.passId(
+            latitude = country.latitude,
+            longitude = country.longitude
+        )
         navHostController.navigate(route)
     }
 
@@ -32,5 +35,4 @@ fun CountryScreen(
         is OnDataError -> ErrorScreen(errorMessage = response.error)
         is OnLoading -> LoadingScreen()
     }
-
 }
