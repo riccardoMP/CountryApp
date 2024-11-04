@@ -28,6 +28,7 @@ fun CountryNavHost(modifier: Modifier = Modifier) {
 
             CountryScreen(
                 uiState = viewModel.countryUIState.collectAsState(),
+                searchQuery = viewModel.searchQuery.collectAsState().value,
                 onQueryUpdated = viewModel::updateSearchQuery,
                 navHostController = navigation
             )

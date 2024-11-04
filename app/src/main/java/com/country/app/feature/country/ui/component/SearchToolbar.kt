@@ -28,7 +28,7 @@ import com.country.app.R
 import com.country.app.ui.theme.Gray
 
 @Composable
-fun SearchableToolbar(onQueryUpdated: (String) -> Unit) {
+fun SearchableToolbar(searchQuery: String, onQueryUpdated: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,15 +38,11 @@ fun SearchableToolbar(onQueryUpdated: (String) -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        var myText by remember { mutableStateOf("") }
         val keyboardController = LocalSoftwareKeyboardController.current
 
         TextField(
-            value = myText,
-            onValueChange = {
-                myText = it
-                onQueryUpdated(it)
-            },
+            value = searchQuery,
+            onValueChange = onQueryUpdated,
             keyboardOptions = KeyboardOptions(imeAction = Done),
             keyboardActions = KeyboardActions(
                 onDone = {
@@ -74,5 +70,5 @@ fun SearchableToolbar(onQueryUpdated: (String) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSearchToolbar() {
-    SearchableToolbar(onQueryUpdated = {})
+    SearchableToolbar(searchQuery = "", onQueryUpdated = {})
 }

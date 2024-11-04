@@ -14,7 +14,8 @@ import com.country.app.util.Screen
 fun CountryScreen(
     navHostController: NavHostController,
     uiState: State<CountryUIState>,
-    onQueryUpdated: (String) -> Unit
+    searchQuery: String,
+    onQueryUpdated: (String) -> Unit,
 ) {
 
     val onCountryClick: (CountryData) -> Unit = { country ->
@@ -28,6 +29,7 @@ fun CountryScreen(
     when (val response = uiState.value) {
         is OnDataReady -> CountryListScreen(
             list = response.data,
+            searchQuery = searchQuery,
             onQueryUpdated = onQueryUpdated,
             onCountryClick = onCountryClick
         )

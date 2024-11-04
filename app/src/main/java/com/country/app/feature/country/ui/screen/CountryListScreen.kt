@@ -13,6 +13,7 @@ import com.country.app.feature.country.ui.component.CountryList
 @Composable
 fun CountryListScreen(
     list: List<CountryData>,
+    searchQuery: String,
     onQueryUpdated: (String) -> Unit,
     onCountryClick: (CountryData) -> Unit
 ) {
@@ -20,7 +21,7 @@ fun CountryListScreen(
     val scrollState = rememberLazyListState()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        SearchableToolbar(onQueryUpdated = onQueryUpdated::invoke)
+        SearchableToolbar(searchQuery = searchQuery, onQueryUpdated = onQueryUpdated::invoke)
         CountryList(list = list, scrollState = scrollState, onCountryClick = onCountryClick)
     }
 }
@@ -41,6 +42,7 @@ fun PreviewCountryListScreen() {
     CountryListScreen(
         list = countryList,
         onQueryUpdated = {},
-        onCountryClick = {}
+        onCountryClick = {},
+        searchQuery = ""
     )
 }
