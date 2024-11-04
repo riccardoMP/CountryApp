@@ -40,7 +40,6 @@ internal class CountryUseCaseImpl @Inject constructor(
         val countryEntityList: List<CountryEntity> = repository.getCountries()
         fullCountryDataList = helper.loadData(list = countryEntityList)
 
-        isDataLoaded = true // Mark data as loaded
-
+        isDataLoaded = true
     }
 }

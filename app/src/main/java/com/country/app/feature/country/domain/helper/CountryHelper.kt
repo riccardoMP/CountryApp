@@ -7,7 +7,6 @@ import com.country.core.local.model.CountryEntity
 interface CountryHelper {
     suspend fun loadData(list: List<CountryEntity>): List<CountryData>
 
-
     fun filterData(
         fullList: List<CountryData>,
         query: String
