@@ -1,9 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 android {
@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androix.material)
     implementation(libs.compose.icons.extended)
     implementation(libs.androidx.maps)
+    implementation(libs.kotlinSerializationJson)
 
     //Hilt
     implementation(libs.hilt.android)
@@ -77,6 +78,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.mockito.core)
 
     implementation (project(":core"))
 }

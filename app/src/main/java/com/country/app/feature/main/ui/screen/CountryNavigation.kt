@@ -11,30 +11,8 @@ import com.country.app.feature.country.viewmodel.CountryViewModel
 import com.country.app.feature.country.ui.screen.CountryScreen
 import com.country.app.feature.details.ui.CountryDetailsScreen
 import com.country.app.util.Screen
-import com.country.app.util.Screen.Companion.DETAILS_ID
-
-object Route {
-
-    const val StartDestination = "countryList"
-    const val TopHeadlineScreenNewsSources = "top-headline/newsId/{newsId}"
-    const val TopHeadlineScreenNewsByCountry = "top-headline/country/{country}"
-    const val TopHeadlineScreenNewsByLanguage = "top-headline/language/{language}"
-    const val NetworkTopHeadlines = "top-headline-network"
-    const val OfflineTopHeadlines = "top-headline-offline"
-    const val PagingTopHeadlines = "top-headline-paging"
-
-    fun topHeadlineScreenWithCountry(country: String): String {
-        return "top-headline/country/$country"
-    }
-
-    fun topHeadlineScreenWithId(newsId: String): String {
-        return "top-headline/newsId/$newsId"
-    }
-
-    fun topHeadlineScreenWithLanguage(language: String): String {
-        return "top-headline/language/$language"
-    }
-}
+import com.country.app.util.Screen.Companion.LATITUDE
+import com.country.app.util.Screen.Companion.LONGITUDE
 
 @Composable
 fun CountryNavHost(modifier: Modifier = Modifier) {
@@ -50,14 +28,21 @@ fun CountryNavHost(modifier: Modifier = Modifier) {
 
             CountryScreen(
                 uiState = viewModel.countryUIState.collectAsState(),
+                searchQuery = viewModel.searchQuery.collectAsState().value,
                 onQueryUpdated = viewModel::updateSearchQuery,
                 navHostController = navigation
             )
         }
 
         composable(Screen.DetailsScreen.route) { backStackEntry ->
-            val countryId = backStackEntry.arguments?.getString(DETAILS_ID).orEmpty()
-            CountryDetailsScreen(navHostController = navigation, countryId = countryId)
+            val latitude = backStackEntry.arguments?.getString(LATITUDE)?.toDoubleOrNull() ?: 0.0
+            val longitude = backStackEntry.arguments?.getString(LONGITUDE)?.toDoubleOrNull() ?: 0.0
+
+            CountryDetailsScreen(
+                navHostController = navigation,
+                latitude = latitude,
+                longitude = longitude
+            )
         }
     }
 }

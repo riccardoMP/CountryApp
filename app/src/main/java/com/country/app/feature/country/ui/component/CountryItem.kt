@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import com.country.app.feature.country.domain.model.CountryData
 
 @Composable
-fun CountryItem(data: CountryData, onClick: (countryId: Int) -> Unit) {
+fun CountryItem(data: CountryData, onClick: (countryId: CountryData) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(data.id) },
+            .clickable { onClick(data) },
         shape = RoundedCornerShape(4.dp),
         colors = CardDefaults.cardColors(containerColor = White),
         elevation = CardDefaults.cardElevation(2.dp),

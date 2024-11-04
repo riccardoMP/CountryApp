@@ -24,11 +24,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 @OptIn(FlowPreview::class)
-
 class CountryViewModel @Inject constructor(private val useCase: CountryUseCase) :
     ViewModel() {
 
     private val searchQueryStateFlow = MutableStateFlow("")
+    // Expose the search query as a StateFlow
+    val searchQuery: StateFlow<String> = searchQueryStateFlow
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val countryUIState: StateFlow<CountryUIState> = searchQueryStateFlow
